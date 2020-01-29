@@ -648,29 +648,17 @@ class Reader extends EventEmitter {
 
 		this.logger.debug('handling tag', this.card);
 
-		switch (this.card.standard) {
-
-			case TAG_ISO_14443_3:
-				return this.handle_Iso_14443_3_Tag();
-
-			case TAG_ISO_14443_4:
-				return this.handle_Iso_14443_4_Tag();
-
-			default:
-				return this.handle_Iso_14443_3_Tag();
-
-		}
-
+		return this.handle_Iso_Any_Tag();
 	}
 
 	// TODO: improve error handling and debugging
-	async handle_Iso_14443_3_Tag() {
+	async handle_Iso_Any_Tag() {
 
 		if (!this.card || !this.connection) {
 			return false;
 		}
 
-		this.logger.debug('processing ISO 14443-3 tag', this.card);
+		this.logger.debug('processing ISO Any tag', this.card);
 
 		// APDU CMD: Get Data
 		const packet = Buffer.from([
